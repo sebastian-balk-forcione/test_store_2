@@ -2,7 +2,7 @@ import { useStore } from "@lib/context/store-context"
 import { LineItem, Region } from "@medusajs/medusa"
 import LineItemOptions from "@modules/common/components/line-item-options"
 import LineItemPrice from "@modules/common/components/line-item-price"
-import NativeSelect from "@modules/common/components/native-select"
+import QuantityInput from "@modules/common/components/quantity-input"
 import Trash from "@modules/common/icons/trash"
 import Thumbnail from "@modules/products/components/thumbnail"
 
@@ -13,7 +13,7 @@ type ItemProps = {
 
 const Item = ({ item, region }: ItemProps) => {
   const { updateItem, deleteItem } = useStore()
-  console.log(item)
+
   return (
     <div className="grid grid-cols-[122px_1fr] gap-x-4">
       <div className="w-[122px]">
@@ -26,17 +26,18 @@ const Item = ({ item, region }: ItemProps) => {
             <LineItemOptions variant={item.variant} />
           </div>
 
-          {/* <NativeSelect
+          <QuantityInput
             value={item.quantity}
-            onChange={(value) =>
+            onChange={(value) => {
+              console.log(value)
               updateItem({
                 lineId: item.id,
                 quantity: parseInt(value.target.value),
               })
-            }
+            }}
             className="max-h-[35px] w-[75px]"
           >
-            {Array.from(
+            {/* {Array.from(
               [
                 ...Array(
                   item.variant.inventory_quantity > 0
@@ -53,8 +54,8 @@ const Item = ({ item, region }: ItemProps) => {
                     {value}
                   </option>
                 )
-              })}
-          </NativeSelect> */}
+              })} */}
+          </QuantityInput>
         </div>
         <div className="flex items-end justify-between text-small-regular flex-1">
           <div>

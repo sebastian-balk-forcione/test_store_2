@@ -10,6 +10,8 @@ import clsx from "clsx"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
+// import Logo from "client/public/Logo.webp"
+import Image from "next/image"
 
 const Nav = () => {
   const pathname = usePathname()
@@ -74,7 +76,8 @@ const Nav = () => {
 
           <div className="flex items-center h-full">
             <Link href="/" className="text-xl-semi uppercase">
-              Acme
+              CONCH
+              {/* <Image src="/Logo.webp" alt="pic" className="w-1/2" /> */}
             </Link>
           </div>
 

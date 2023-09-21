@@ -13,21 +13,21 @@ const SkeletonCartItem = () => {
         </div>
         <div className="flex items-end justify-between text-small-regular flex-1">
           {/* <div>
-              <button
-                className="flex items-center gap-x-1 text-gray-500"
-                onClick={() => deleteItem(item.id)}
-              >
-                <Trash size={14} />
-                <span>Remove</span>
-              </button>
-            </div>
-            <div>
-              <LineItemPrice
-                variant={item.variant as CalculatedVariant}
-                quantity={item.quantity}
-                region={region}
-              />
-            </div> */}
+                <button
+                  className="flex items-center gap-x-1 text-gray-500"
+                  onClick={() => deleteItem(item.id)}
+                >
+                  <Trash size={14} />
+                  <span>Remove</span>
+                </button>
+              </div>
+              <div>
+                <LineItemPrice
+                  variant={item.variant as CalculatedVariant}
+                  quantity={item.quantity}
+                  region={region}
+                />
+              </div> */}
         </div>
       </div>
     </div>

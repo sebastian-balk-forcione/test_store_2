@@ -36,8 +36,7 @@ const Items = ({ items, region, cartId }: ItemsProps) => {
                           </Link>
                         </h3>
                         <LineItemOptions variant={item.variant} />
-                        <div>HELLO</div>
-                        {/* <span>Quantity: {item.quantity}</span> */}
+                        <span>Quantity: {item.quantity}</span>
                       </div>
                       <div className="flex justify-end">
                         <LineItemPrice region={region} item={item} />
@@ -49,8 +48,7 @@ const Items = ({ items, region, cartId }: ItemsProps) => {
             )
           })
         : Array.from(Array(items.length).keys()).map((i) => {
-            // return <SkeletonLineItem key={i} />
-            return <div>HELLO</div>
+            return <SkeletonLineItem key={i} />
           })}
     </div>
   )
