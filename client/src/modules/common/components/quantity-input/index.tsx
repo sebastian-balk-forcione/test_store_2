@@ -1,8 +1,10 @@
 import { ErrorMessage } from "@hookform/error-message"
+import { useStore } from "@lib/context/store-context"
 import clsx from "clsx"
 import {
   forwardRef,
   InputHTMLAttributes,
+  RefObject,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -14,6 +16,7 @@ export type QuantityInputProps = {
   placeholder?: string
   errors?: Record<string, unknown>
   touched?: Record<string, unknown>
+  // onConfirm?: (value: string) => void
 } & InputHTMLAttributes<HTMLInputElement>
 
 const QuantityInput = forwardRef<HTMLInputElement, QuantityInputProps>(
@@ -23,6 +26,9 @@ const QuantityInput = forwardRef<HTMLInputElement, QuantityInputProps>(
   ) => {
     const innerRef = useRef<HTMLInputElement>(null)
     const [isEmptyValue, setIsEmptyValue] = useState(false)
+
+    const [isDisabled, setIsDisabled] = useState(true)
+    // const [inputValue, setInputValue] = useState("1")
 
     useImperativeHandle<HTMLInputElement | null, HTMLInputElement | null>(
       ref,
@@ -35,13 +41,18 @@ const QuantityInput = forwardRef<HTMLInputElement, QuantityInputProps>(
 
     useEffect(() => {
       if (innerRef.current && innerRef.current.value === "") {
-        console.log("hello", innerRef.current)
         setIsEmptyValue(true)
       } else {
-        console.log("bye", innerRef.current)
         setIsEmptyValue(false)
       }
     }, [innerRef.current?.value])
+
+    const handleClick = () => {
+      // if (!isDisabled) {
+      //   onConfirm(inputValue)
+      // }
+      setIsDisabled(!isDisabled)
+    }
 
     return (
       <div>
@@ -58,16 +69,21 @@ const QuantityInput = forwardRef<HTMLInputElement, QuantityInputProps>(
         >
           <input
             ref={innerRef}
+            // value={inputValue}
             {...props}
             className="appearance-none flex-1 bg-transparent border-none px-4 py-2.5 transition-colors duration-150 focus:border-gray-700 outline-none"
+            disabled={isDisabled}
           />
         </div>
+        <button type="submit" onClick={() => handleClick()}>
+          {!isDisabled ? "Confirm" : "Button: Quantity Change"}
+        </button>
+        {/* <button></button> */}
         {hasError && props.name && (
           <ErrorMessage
             errors={errors}
             name={props.name}
             render={({ message }) => {
-              console.log("fuck!")
               return (
                 <div className="pt-1 pl-2 text-rose-500 text-xsmall-regular">
                   <span>{message}</span>

@@ -1,4 +1,5 @@
 import { useStore } from "@lib/context/store-context"
+import { useState } from "react"
 import { LineItem, Region } from "@medusajs/medusa"
 import LineItemOptions from "@modules/common/components/line-item-options"
 import LineItemPrice from "@modules/common/components/line-item-price"
@@ -13,6 +14,14 @@ type ItemProps = {
 
 const Item = ({ item, region }: ItemProps) => {
   const { updateItem, deleteItem } = useStore()
+  const [isUpdated, setIsUpdated] = useState(false)
+
+  // const handleConfirm = () => {
+  //   updateItem({
+  //     lineId: item.id,
+  //     quantity: parseInt(value.target.value),
+  //   })
+  // }
 
   return (
     <div className="grid grid-cols-[122px_1fr] gap-x-4">
@@ -28,13 +37,13 @@ const Item = ({ item, region }: ItemProps) => {
 
           <QuantityInput
             value={item.quantity}
-            onChange={(value) => {
-              console.log(value)
-              updateItem({
-                lineId: item.id,
-                quantity: parseInt(value.target.value),
-              })
-            }}
+            // onConfirm={() => handleConfirm(value)}
+            // onChange={(value) => {
+            //   updateItem({
+            //     lineId: item.id,
+            //     quantity: parseInt(value.target.value),
+            //   })
+            // }}
             className="max-h-[35px] w-[75px]"
           ></QuantityInput>
         </div>
