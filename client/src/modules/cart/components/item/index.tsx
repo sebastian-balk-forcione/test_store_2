@@ -36,26 +36,7 @@ const Item = ({ item, region }: ItemProps) => {
               })
             }}
             className="max-h-[35px] w-[75px]"
-          >
-            {/* {Array.from(
-              [
-                ...Array(
-                  item.variant.inventory_quantity > 0
-                    ? item.variant.inventory_quantity
-                    : 10
-                ),
-              ].keys()
-            )
-              .slice(0, item.variant.inventory_quantity)
-              .map((i) => {
-                const value = i + 1
-                return (
-                  <option value={value} key={i}>
-                    {value}
-                  </option>
-                )
-              })} */}
-          </QuantityInput>
+          ></QuantityInput>
         </div>
         <div className="flex items-end justify-between text-small-regular flex-1">
           <div>
