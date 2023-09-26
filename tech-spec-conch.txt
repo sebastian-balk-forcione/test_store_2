@@ -1,0 +1,16 @@
+want to pick number of colours for prints and then have any number of
+quantities and apply quantity discount
+
+example : https://www.print.inc/p/206/gildan-heavy-t-shirts
+
+1 how medusa works, add fake products and try to order any number of them
+
+Will need to figure out how to upload a product to medusas database, have the product visible on the webiste and then see if i can order any number of them
+
+import pricing and products from csv
+
+
+conchclothing.co.uk
+
+
+customers upload art work
