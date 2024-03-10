@@ -14,19 +14,18 @@ type ItemProps = {
 
 const Item = ({ item, region }: ItemProps) => {
   const { updateItem, deleteItem } = useStore()
-  const [quantity, setQuantity] = useState(item.quantity.toString())
+  const [quantity, setQuantity] = useState<number>(item.quantity)
   const [isDisabled, setIsDisabled] = useState(true)
 
-  // One bug: if you change the quatity to nothing and then confirm it doesn't update the cart
   const handleConfirm = () => {
-    let amount = parseInt(quantity)
     isDisabled
       ? setIsDisabled(!isDisabled)
-      : !isNaN(amount) &&
+      : !isNaN(quantity) &&
         updateItem({
           lineId: item.id,
-          quantity: amount,
+          quantity: quantity,
         })
+
     setIsDisabled(!isDisabled)
   }
 
@@ -45,13 +44,13 @@ const Item = ({ item, region }: ItemProps) => {
           <QuantityInput
             value={quantity}
             onChange={(e) => {
-              setQuantity(e.target.value)
+              setQuantity(Number(e.target.value))
             }}
             className="max-h-[35px] w-[75px]"
             disabled={isDisabled}
           >
             <button type="submit" onClick={() => handleConfirm()}>
-              {!isDisabled ? "Confirm" : "Edit"}
+              {isDisabled ? "Edit" : "Confirm"}
             </button>
           </QuantityInput>
         </div>

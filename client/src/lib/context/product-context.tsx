@@ -124,18 +124,17 @@ export const ProductProvider = ({
   }
 
   const addToCart = () => {
-    if (variant) {
+    variant &&
       addItem({
         variantId: variant.id,
         quantity,
       })
-    }
   }
 
   const increaseQuantity = (amount: number) => {
     const maxQuantity = variant?.inventory_quantity || 0
     if (maxQuantity > amount) {
-      setQuantity(() => amount)
+      setQuantity(amount)
     } else {
       setMaxQuantityMet(true)
     }
