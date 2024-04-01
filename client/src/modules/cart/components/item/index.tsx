@@ -1,4 +1,5 @@
 import { useStore } from "@lib/context/store-context"
+import { useState } from "react"
 import { LineItem, Region } from "@medusajs/medusa"
 import LineItemOptions from "@modules/common/components/line-item-options"
 import LineItemPrice from "@modules/common/components/line-item-price"
@@ -13,6 +14,20 @@ type ItemProps = {
 
 const Item = ({ item, region }: ItemProps) => {
   const { updateItem, deleteItem } = useStore()
+  const [quantity, setQuantity] = useState<number>(item.quantity)
+  const [isDisabled, setIsDisabled] = useState(true)
+
+  const handleConfirm = () => {
+    isDisabled
+      ? setIsDisabled(!isDisabled)
+      : !isNaN(quantity) &&
+        updateItem({
+          lineId: item.id,
+          quantity: quantity,
+        })
+
+    setIsDisabled(!isDisabled)
+  }
 
   return (
     <div className="grid grid-cols-[122px_1fr] gap-x-4">
@@ -27,16 +42,17 @@ const Item = ({ item, region }: ItemProps) => {
           </div>
 
           <QuantityInput
-            value={item.quantity}
-            onChange={(value) => {
-              console.log(value)
-              updateItem({
-                lineId: item.id,
-                quantity: parseInt(value.target.value),
-              })
+            value={quantity}
+            onChange={(e) => {
+              setQuantity(Number(e.target.value))
             }}
             className="max-h-[35px] w-[75px]"
-          ></QuantityInput>
+            disabled={isDisabled}
+          >
+            <button type="submit" onClick={() => handleConfirm()}>
+              {isDisabled ? "Edit" : "Confirm"}
+            </button>
+          </QuantityInput>
         </div>
         <div className="flex items-end justify-between text-small-regular flex-1">
           <div>

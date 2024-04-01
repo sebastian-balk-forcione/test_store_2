@@ -3,6 +3,7 @@ import clsx from "clsx"
 import {
   forwardRef,
   InputHTMLAttributes,
+  RefObject,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -35,10 +36,8 @@ const QuantityInput = forwardRef<HTMLInputElement, QuantityInputProps>(
 
     useEffect(() => {
       if (innerRef.current && innerRef.current.value === "") {
-        console.log("hello", innerRef.current)
         setIsEmptyValue(true)
       } else {
-        console.log("bye", innerRef.current)
         setIsEmptyValue(false)
       }
     }, [innerRef.current?.value])
@@ -62,12 +61,12 @@ const QuantityInput = forwardRef<HTMLInputElement, QuantityInputProps>(
             className="appearance-none flex-1 bg-transparent border-none px-4 py-2.5 transition-colors duration-150 focus:border-gray-700 outline-none"
           />
         </div>
+        {children}
         {hasError && props.name && (
           <ErrorMessage
             errors={errors}
             name={props.name}
             render={({ message }) => {
-              console.log("fuck!")
               return (
                 <div className="pt-1 pl-2 text-rose-500 text-xsmall-regular">
                   <span>{message}</span>

@@ -18,13 +18,14 @@ import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
 interface ProductContext {
   formattedPrice: string
   quantity: number
+  preCheckoutQuantity: number
   disabled: boolean
   inStock: boolean
   variant?: Variant
   maxQuantityMet: boolean
   options: Record<string, string>
   updateOptions: (options: Record<string, string>) => void
-  increaseQuantity: () => void
+  increaseQuantity: (amount: number) => void
   decreaseQuantity: () => void
   addToCart: () => void
 }
@@ -41,6 +42,7 @@ export const ProductProvider = ({
   children,
 }: ProductProviderProps) => {
   const [quantity, setQuantity] = useState<number>(1)
+  const [preCheckoutQuantity, setPreCheckoutQuantity] = useState<number>(1)
   const [options, setOptions] = useState<Record<string, string>>({})
   const [maxQuantityMet, setMaxQuantityMet] = useState<boolean>(false)
   const [inStock, setInStock] = useState<boolean>(true)
@@ -122,19 +124,17 @@ export const ProductProvider = ({
   }
 
   const addToCart = () => {
-    if (variant) {
+    variant &&
       addItem({
         variantId: variant.id,
         quantity,
       })
-    }
   }
 
-  const increaseQuantity = () => {
+  const increaseQuantity = (amount: number) => {
     const maxQuantity = variant?.inventory_quantity || 0
-
-    if (maxQuantity > quantity + 1) {
-      setQuantity(quantity + 1)
+    if (maxQuantity > amount) {
+      setQuantity(amount)
     } else {
       setMaxQuantityMet(true)
     }
@@ -154,6 +154,7 @@ export const ProductProvider = ({
     <ProductActionContext.Provider
       value={{
         quantity,
+        preCheckoutQuantity,
         maxQuantityMet,
         disabled,
         inStock,

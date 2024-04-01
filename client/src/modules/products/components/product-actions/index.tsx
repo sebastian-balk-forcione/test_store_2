@@ -5,22 +5,37 @@ import Button from "@modules/common/components/button"
 import OptionSelect from "@modules/products/components/option-select"
 import clsx from "clsx"
 import Link from "next/link"
-import React, { useMemo } from "react"
+import React, { ChangeEvent, useMemo } from "react"
+
 import { Product } from "types/medusa"
+import QuantityInput from "@modules/common/components/quantity-input"
+import { useState } from "react"
 
 type ProductActionsProps = {
   product: PricedProduct
 }
 
 const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
-  const { updateOptions, addToCart, options, inStock, variant } =
-    useProductActions()
+  const {
+    updateOptions,
+    addToCart,
+    increaseQuantity,
+    options,
+    inStock,
+    variant,
+  } = useProductActions()
+
+  const [quantity, setQuantity] = useState<number>(1)
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    increaseQuantity(Number(e.target.value))
+    setQuantity(Number(e.target.value))
+  }
 
   const price = useProductPrice({ id: product.id!, variantId: variant?.id })
 
   const selectedPrice = useMemo(() => {
     const { variantPrice, cheapestPrice } = price
-
     return variantPrice || cheapestPrice || null
   }, [price])
 
@@ -65,6 +80,12 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
             >
               {selectedPrice.calculated_price}
             </span>
+            <div>Quantity</div>
+            <QuantityInput
+              value={quantity}
+              onChange={handleChange}
+              className="max-h-[35px] w-[75px]"
+            />
             {selectedPrice.price_type === "sale" && (
               <>
                 <p>
@@ -84,7 +105,7 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
         )}
       </div>
 
-      <Button onClick={addToCart}>
+      <Button onClick={() => addToCart()}>
         {!inStock ? "Out of stock" : "Add to cart"}
       </Button>
     </div>
